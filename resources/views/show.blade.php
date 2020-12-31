@@ -3,7 +3,7 @@
     <div class="movie-info border-b border-gray-800">
         <div class="constainer mx-auto px-8 md:px-16 py-16 flex flex-col md:flex-row">
             <img src="{{ 'https://image.tmdb.org/t/p/w500/' . $movie['backdrop_path'] }}" alt="parasite"
-                class="w-64 md:w-96">
+                class="w-auto md:w-auto ">
             <div class="md:ml-24">
                 <h2 class="text-4xl font-semibold">{{ $movie['original_title'] }}</h2>
 
@@ -39,17 +39,46 @@
 
                             </div>
                         </div>
-                        @if (!empty($movie['videos']['results']))
-                            <div class="mt-12">
-                                <a href="https://youtube.com/watch?v={{ $movie['videos']['results'][0]['key'] }}"
-                                    target="popup"
-                                    class=" inline-flex items-center bg-yellow-500 text-gray-900 rounded font-semibold px-5 py-4 hover:bg-yellow-600 transition ease-in-out duration-150">
-                                    <i class="fa fa-play-circle-o fa-lg"></i>
-                                    <span class="ml-2"> Play Trailer</span>
-                                </a>
-                            </div>
-                        @endif
+                        <div x-data="{ isOpen: false }">
+                            @if (!empty($movie['videos']['results']))
+                                <div class="mt-12">
+                                    <button @click="isOpen = true"
+                                        class="flex inline-flex items-center bg-yellow-500 text-gray-900 rounded font-semibold px-5 py-4 hover:bg-orange-600 transition ease-in-out duration-150">
+                                        <i class="fa fa-play-circle-o fa-lg"></i>
+                                        <span class="ml-2">Play Trailer</span>
+                                    </button>
 
+                                </div>
+
+                                <template x-if="isOpen">
+                                    <div style="background-color: rgba(0, 0, 0, .5);"
+                                        class="fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto">
+                                        <div class="container mx-auto lg:px-32 rounded-lg overflow-y-auto">
+                                            <div class="bg-gray-900 rounded">
+                                                <div class="flex justify-end pr-4 pt-2">
+                                                    <button @click="isOpen = false" @keydown.escape.window="isOpen = false"
+                                                        @click.away="isOpen = false"
+                                                        class="text-3xl leading-none hover:text-gray-300">&times;
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body px-8 py-8">
+                                                    <div class="responsive-container overflow-hidden relative"
+                                                        style="padding-top: 56.25%">
+                                                        <iframe
+                                                            class="responsive-iframe absolute top-0 left-0 w-full h-full"
+                                                            src="https://www.youtube.com/embed/{{ $movie['videos']['results'][0]['key'] }}"
+                                                            style="border:0;" allow="autoplay; encrypted-media"
+                                                            allowfullscreen></iframe>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+
+                            @endif
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -64,10 +93,13 @@
                         @foreach ($movie['credits']['cast'] as $cast)
                             @if ($loop->index < 5)
                                 <div class="mt-8">
-                                    <a href="#">
-                                        <img src="{{ 'https://image.tmdb.org/t/p/w500/' . $cast['profile_path'] }}"
-                                            alt="parasite" class="hover:opacity-50 transition ease-in-out duration-150">
-                                    </a>
+                                    @if ($cast['profile_path'])
+                                        <a href="#">
+                                            <img src="{{ 'https://image.tmdb.org/t/p/w500/' . $cast['profile_path'] }}"
+                                                alt="parasite" class="hover:opacity-50 transition ease-in-out duration-150">
+                                        </a>
+                                    @endif
+
                                     <div class="mt-2">
                                         <a href="#"
                                             class="text-lg mt-2 hover:text-gray-300">{{ $cast['original_name'] }}</a>
@@ -83,7 +115,7 @@
 
         </div>
         <hr class=" border-gray-600 text-center text-2xl">
-        <div class="mb-10">
+        <div class="mb-10" x-data="{isOpen: false, image: ''}">
 
             <div class="container mx-auto px-8 md:px-16 pt-16">
                 <div class="popular-movies">
@@ -92,16 +124,37 @@
                         @foreach ($movie['images']['backdrops'] as $image)
                             @if ($loop->index < 9)
                                 <div class="mt-8">
-                                    <a href="#">
-                                        <img src="{{ 'https://image.tmdb.org/t/p/w500'.$image['file_path'] }}"
-                                            alt="parasite" class="hover:opacity-75 transition ease-in-out duration-150">
+                                    <a @click.prevent="
+                                            isOpen = true
+                                            image='{{ 'https://image.tmdb.org/t/p/original/' . $image['file_path'] }}'
+                                        " href="#">
+                                        <img src="{{ 'https://image.tmdb.org/t/p/w500/' . $image['file_path'] }}"
+                                            alt="image1" class="hover:opacity-75 transition ease-in-out duration-150">
                                     </a>
                                 </div>
                             @endif
                         @endforeach
-
-
                     </div>
+
+                    <div style="background-color: rgba(0, 0, 0, .5);"
+                        class="fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto"
+                        x-show="isOpen">
+                        <div class="container mx-auto lg:px-32 rounded-lg overflow-y-auto">
+                            <div class="bg-gray-900 rounded">
+                                <div class="flex justify-end pr-4 pt-2">
+                                    <button @click="isOpen = false" @keydown.escape.window="isOpen = false"
+                                        @click.away="isOpen = false"
+                                        class="text-3xl leading-none hover:text-gray-300">&times;
+                                    </button>
+                                </div>
+                                <div class="modal-body px-8 py-8">
+                                    <img :src="image" alt="poster">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
