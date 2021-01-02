@@ -47,7 +47,6 @@
                                         <i class="fa fa-play-circle-o fa-lg"></i>
                                         <span class="ml-2">Play Trailer</span>
                                     </button>
-
                                 </div>
 
                                 <template x-if="isOpen">
@@ -107,6 +106,8 @@
                                         <p class="text-sm text-gray-400">{{ $cast['character'] }}</p>
                                     </div>
                                 </div>
+                            @else
+                                @break
                             @endif
                         @endforeach
                     </div>
@@ -125,13 +126,15 @@
                             @if ($loop->index < 9)
                                 <div class="mt-8">
                                     <a @click.prevent="
-                                            isOpen = true
-                                            image='{{ 'https://image.tmdb.org/t/p/original/' . $image['file_path'] }}'
-                                        " href="#">
+                                                    isOpen = true
+                                                    image='{{ 'https://image.tmdb.org/t/p/original/' . $image['file_path'] }}'
+                                                " href="#">
                                         <img src="{{ 'https://image.tmdb.org/t/p/w500/' . $image['file_path'] }}"
                                             alt="image1" class="hover:opacity-75 transition ease-in-out duration-150">
                                     </a>
                                 </div>
+                            @else
+                                @break
                             @endif
                         @endforeach
                     </div>
