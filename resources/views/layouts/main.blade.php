@@ -28,15 +28,15 @@
     <nav class="border-b border-gray-800">
         <div class="contaner mx-auto flex flex-col md:flex-row items-center justify-between px-16 py-4">
             <ul class="flex flex-col md:flex-row items-center">
-                <a href="/">
+                <a href="{{ route('movies.index') }}">
                     <i class="fas fa-film fa-lg"> Movie App</i>
                 </a>
 
                 <li class="md:ml-16 mt-3 md:mt-0">
-                    <a href="" class="hover:text-gray-300">Movies</a>
+                    <a href="{{ route('movies.index') }}" class="hover:text-gray-300">Movies</a>
                 </li>
                 <li class="md:ml-6 mt-3 md:mt-0">
-                    <a href="" class="hover:text-gray-300">TV Shows</a>
+                    <a href="#" class="hover:text-gray-300">TV Shows</a>
                 </li>
                 <li class="md:ml-6 mt-3 md:mt-0">
                     <a href="{{ route('actors.index') }}" class="hover:text-gray-300">Actors</a>
@@ -55,7 +55,6 @@
     </nav>
     @yield('content')
     @livewireScripts
-
+    @yield('scripts')
 </body>
-
 </html>
