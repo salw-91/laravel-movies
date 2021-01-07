@@ -6,10 +6,18 @@
             <div class="flex-none">
                 <img src="{{ $actor['profile_path'] }}" alt="poster" class="w-64 lg:w-96">
                 <ul class="flex items center mt-4">
-                    <a href="{{ $social['facebook'] }}" title="Facebook"><i class="fab fa-facebook-square fa-2x mr-2  text-gray-400"></i></a>
-                    <a href="{{ $social['instagram'] }}" title="Instagram"><i class="fab fa-instagram-square fa-2x mr-2 text-gray-400"></i></a>
-                    <a href="{{ $social['twitter'] }}" title="Twitter"><i class="fab fa-twitter-square fa-2x mr-2 text-gray-400"></i></a>
-                    <a href="{{ $actor['homepage'] }}" title="Website"><i class="fas fa-globe fa-2x mr-2 text-gray-400"></i></a>
+                    @if($social['facebook'])
+                    <a href="{{ $social['facebook'] }}" title="Facebook"  target="_blank"><i class="fab fa-facebook-square fa-2x mr-2  text-gray-400"></i></a>
+                    @endif
+                    @if($social['instagram'])
+                    <a href="{{ $social['instagram'] }}" title="Instagram"  target="_blank"><i class="fab fa-instagram-square fa-2x mr-2 text-gray-400"></i></a>
+                    @endif
+                    @if($social['twitter'])
+                    <a href="{{ $social['twitter'] }}" title="Twitter"  target="_blank"><i class="fab fa-twitter-square fa-2x mr-2 text-gray-400"></i></a>
+                    @endif
+                    @if($actor['homepage'])
+                    <a href="{{ $actor['homepage'] }}" title="Website"  target="_blank"><i class="fas fa-globe fa-2x mr-2 text-gray-400"></i></a>
+                    @endif
                 </ul>
             </div>
             <div class="md:ml-24">
@@ -25,9 +33,13 @@
                 <p class="text-gray-300 mt-8">{{ $actor['biography'] }}</p>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+                    @foreach($knownForMovies as $movie)
                     <div class="mt-4">
-
+                        <a href="{{ route('movies.show', $movie['id']) }}"> <img src="{{ $movie['poster_path'] }}" alt="poster" class="hover:opacity-75 transition ease-in-out duration-150"> </a>
+                        <a href="{{ route('movies.show', $movie['id']) }}" class="text-sm leading-normal block text-gray-400 hover:text-white mt-1">{{ $movie['title'] }}</a>
                     </div>
+                        
+                    @endforeach
                 </div>
 
             </div>
@@ -37,6 +49,13 @@
     <div class="credits border-b border-gray-800">
         <div class="container mx-auto px-4 py-16">
             <h2 class="text-4xl font-semibold">Credits</h2>
+
+            <ul class="list-disc leading-loose pl-5 mt-8">
+                @foreach($credits as $credit)
+                    <li>{{ $credit['release_year'] }}  &middot; <strong>{{ $credit['title'] }}</strong> as {{ $credit['character'] }}</li>
+                @endforeach
+
+            </ul>
             
         </div>
     </div> <!-- end credits -->

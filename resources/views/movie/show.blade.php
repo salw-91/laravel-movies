@@ -104,6 +104,7 @@
             <h2 class="text-4xl font-semibold">Images</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                 @foreach ($movie['images'] as $image)
+                @if($image['file_path'])
                     <div class="mt-8">
                         <a
                             @click.prevent="
@@ -112,9 +113,11 @@
                             "
                             href="#"
                         >
-                            <img src="{{ 'https://image.tmdb.org/t/p/w500/'.$image['file_path'] }}" alt="image1" class="hover:opacity-75 transition ease-in-out duration-150">
-                        </a>
-                    </div>
+                            
+                        <img src="{{ 'https://image.tmdb.org/t/p/w500/'.$image['file_path'] }}" alt="image1" class="hover:opacity-75 transition ease-in-out duration-150">
+                    </a>
+                </div>
+                @endif
                 @endforeach
             </div>
 
