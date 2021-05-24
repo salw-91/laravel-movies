@@ -30,18 +30,6 @@
             <p class="infinite-scroll-error">Error</p>
           </div>
 
-        {{-- <div class="flex justify-between mt-16">
-            @if($previous)
-            <a href="/actors/page/{{ $previous }}" class="hover:text-gray-300">Previous</a>
-            @else
-            <div></div>
-            @endif
-            @if($next)
-            <a href="/actors/page/{{ $next }}" class="hover:text-gray-300">Next</a>
-            @else
-            <div></div>
-            @endif
-        </div> --}}
     @endsection
 @section('scripts')
 <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
