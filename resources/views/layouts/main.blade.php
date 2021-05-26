@@ -19,7 +19,9 @@
     <!-- livewire -->
     @livewireStyles
 
-    <link rel="stylesheet" href="/resources/css/app.css">
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/script.js"></script>
     {{-- Alpine JS --}}
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 </head>
