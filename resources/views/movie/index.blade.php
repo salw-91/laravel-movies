@@ -3,7 +3,7 @@
     <div class="container mx-auto px-16 pt-16">
         <div class="popular-movies">
             <h2 class="uppercase tracking-wider text-yellow-500 text-lg font-semibold">Popular Movies</h2>
-
+            <button id="moviesFilter" onclick="show(moviesGenres)">Filter</button>
             <div class="grid grid-cols-1 gap-8" id="moviesGenres">
                 <ul class="genres">
                     @foreach ($moviegenres as $index=>$item)

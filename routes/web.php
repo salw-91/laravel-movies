@@ -18,3 +18,7 @@ Route::get('/actors/{actor}', [ActorsController::class, 'show'])->name('actors.s
 
 Route::get('/genres', [GenresController::class, 'index'])->name('genres.index');
 Route::get('/genres/{id}', [GenresController::class, 'show'])->name('genres.show');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');

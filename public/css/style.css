@@ -19,3 +19,7 @@
 .genre.highlight{
     background-color: red;
 }
+
+#moviesGenres{
+    display: none;
+}
